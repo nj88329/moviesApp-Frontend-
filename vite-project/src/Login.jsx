@@ -2,6 +2,10 @@
 // import { useAuth0 } from "@auth0/auth0-react";
 import ProtectedRoute from './ProtectedRoute';
 import Animation from './Components/Animation';
+import { useSpring, animated } from '@react-spring/web';
+import { config } from '@react-spring/web';
+import { easings } from '@react-spring/web'
+
 import {
   Flex,
   Heading,
@@ -20,7 +24,30 @@ import { getAuth, signOut } from "firebase/auth";
 import { useNavigate }  from 'react-router-dom';
 
 const Login = ({user}) => {
-   
+
+  
+
+  const [springs, api] = useSpring(
+    () => ({
+      y: 0,
+      scale: 1,
+      // config: key => {
+      //   if (key === 'y') {
+      //     return {
+      //       mass: 5,
+      //       friction: 120,
+      //       tension: 120,
+      //     }
+      //   }
+
+      //   return {}
+      // },
+      config: {
+        easing: easings.steps(5),
+      },
+    }),
+    []
+  )
   const auth = getAuth(); 
   const { toggleColorMode } = useColorMode();
   const formBackground = useColorModeValue('gray.100', 'gray.700');
@@ -81,13 +108,23 @@ const Login = ({user}) => {
   }
 
 
+  const handleClick = () => {
+    api.start({
+      y: 20,
+      scale: 1.2,
+      config: {
+        friction: 10,
+      },
+    })
+  }
+
   return (
-    <div>
+    <animated.div style={springs}  >
       <Animation/>
 {
   (!user)?<>
-<Flex h="100vh" alignItems="center" justifyContent="center" >
-      <Flex
+<Flex h="100vh" alignItems="center" justifyContent="center"    >
+      <Flex 
         flexDirection="column"
         bg={formBackground}
         p={12}
@@ -95,6 +132,7 @@ const Login = ({user}) => {
         boxShadow="lg"
         width="100%"  // Adjust width of the container if needed
         maxW="400px" 
+        onMouseEnter={handleClick}  onMouseLeave={() => api.start({ y: 0, scale: 1 })}
       >
         <Heading mb={6}>Log In</Heading>
         <Input
@@ -140,7 +178,7 @@ const Login = ({user}) => {
         </Button>
     </>
 }
-    </div> 
+    </animated.div> 
   )
 }
 
