@@ -166,6 +166,7 @@ const Login = ({user}) => {
     </>: <>
       <h2>{user.displayName}</h2>
       <h3>{user.email}</h3>
+      <img src={user.photoURL}/>
     <Button
            size='lg'
            height='48px'

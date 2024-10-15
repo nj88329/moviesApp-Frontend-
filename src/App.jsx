@@ -5,7 +5,7 @@ import Login from './Login'
 import Navbars from './Navbars';
 import ProtectedRoute from './ProtectedRoute';
 import Features from './Features';
-import { ChakraProvider } from '@chakra-ui/react'
+import { ChakraProvider, theme } from '@chakra-ui/react'
 import { store } from './store/store'
 import { Provider } from 'react-redux'
 import PdfUploader from './Components/PdfUploader';
@@ -55,21 +55,24 @@ function App() {
     // enter: { opacity: 1 },
     // leave: { opacity: 0 },
     from: {
-      clipPath: 'polygon(0% 0%, 0% 100%, 0% 100%, 0% 0%)',
+      clipPath: 'polygon(0% 0%, 0% 100%, 0% 100%, 0% 0%)' ,
+      opacity: 0
     },
     enter: {
       clipPath: 'polygon(0% 0%, 0% 100%, 100% 100%, 100% 0%)',
+      opacity: 1
     },
     leave: {
       clipPath: 'polygon(100% ,0%, 100% 100%, 100% 100%, 100% 0%)',
+      opacity: 0
     },
-    config: { duration: 4500 },
+    config: { duration: 4000 },
     onRest: (_a, _b, item) => {
       if (index === item) {
         set(state => (state + 1) % slides.length)
       }
     },
-    exitBeforeEnter: true,
+     exitBeforeEnter:false,
   })
 
   const [user, setUser] = useState(null);
@@ -94,13 +97,15 @@ function App() {
   <Provider store={store} >
 
   <ChakraProvider>
+    <div style={{ backgroundColor: ''}}>
         {/* <div style={{ backgroundColor: 'black',  height: '100vh', width: '100vw', overflowX: 'hidden', display: 'flex', flexDirection: 'column' }}> */}
-        <div className="flex fill center">
+        <div className="flex fill center" >
           {transitions((style, i) => (
             <animated.div
               className= { styles.bg }
               style={{
                 ...style,
+                
                 backgroundImage: `url(${slides[i]})`,
                 overflowX: 'hidden', display: 'flex', flexDirection: 'column'
               }}
@@ -123,6 +128,7 @@ function App() {
         </Routes>
         </div>
         {/* </div> */}
+        </div>
    </ChakraProvider>
   
       </Provider>
