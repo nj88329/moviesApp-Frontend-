@@ -1,4 +1,5 @@
 import './App.css'
+import React from 'react'
 import { Routes, Route } from 'react-router-dom';
 import Home from './Home';
 import Login from './Login'
@@ -12,7 +13,7 @@ import PdfUploader from './Components/PdfUploader';
 import PdfViewer from './Components/PdfViewer';
 import Animation from './Components/Animation';
 import { initializeApp } from "firebase/app";
-import { useEffect ,useState } from 'react';
+import { useEffect ,useState , useMemo } from 'react';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { useTransition, animated } from '@react-spring/web';
 import styles from './index.module.css'; // Correct for CSS Modules
@@ -78,17 +79,20 @@ function App() {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setUser(user);
-   
-      } else {
-        setUser(null); // If the user logs out or is not authenticated
-      }
+    const unsubscribe = onAuthStateChanged(auth, (newUser) => {
+      setUser((prevUser) => {
+        // Only update the user if the new one is different
+        if (newUser?.uid !== prevUser?.uid) {
+          return newUser || null;
+        }
+        return prevUser;
+      });
     });
-    // Cleanup the subscription on unmount
-    return () => unsubscribe();
-}, []);
+  
+    return () => unsubscribe();  // Cleanup on unmount
+  }, []);
+
+  const memoizedUser = useMemo(() => user, [user]);
 
   return (
     <>
@@ -97,9 +101,10 @@ function App() {
   <Provider store={store} >
 
   <ChakraProvider>
+     {/* <div style={{ backgroundColor: 'black',  height: '100vh', width: '100vw', overflowX: 'hidden', display: 'flex', flexDirection: 'column' }}> */}
     <div style={{ backgroundColor: ''}}>
-        {/* <div style={{ backgroundColor: 'black',  height: '100vh', width: '100vw', overflowX: 'hidden', display: 'flex', flexDirection: 'column' }}> */}
-        <div className="flex fill center" >
+       
+        {/* <div className="flex fill center" >
           {transitions((style, i) => (
             <animated.div
               className= { styles.bg }
@@ -112,14 +117,14 @@ function App() {
             />
             
           ))}
-    </div>
+    </div> */}
           <Navbars />
           <div style={{ flexGrow: 1 }}> 
         <Routes >
         <Route exact path="/" element={<Home/>} />
         <Route path="/login" element={<Login user={user} />} />
         <Route path='/animation' element={<Animation />}></Route>
-          <Route element={<ProtectedRoute   user={user}  />}> 
+          <Route element={<ProtectedRoute   user = {memoizedUser}  />}> 
               <Route path="/features" element={<Features/>} />
               <Route path="/pdf" element={<PdfUploader/>} />
               <Route path='/viewpdf' element = {<PdfViewer/>}></Route>
@@ -139,4 +144,4 @@ function App() {
 
 
 
-export default App
+export default React.memo(App);

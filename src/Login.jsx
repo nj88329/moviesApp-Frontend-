@@ -164,9 +164,13 @@ const Login = ({user}) => {
       </Flex>
     </Flex>
     </>: <>
-      <h2>{user.displayName}</h2>
-      <h3>{user.email}</h3>
-      <img src={user.photoURL}/>
+   <div style={{display:'block',marginTop:'-12vh' }}>
+    <div style={{display:'flex', justifyContent:'center'}}>
+    <h2>{user.displayName}</h2>
+      <img src={user.photoURL} style={{ height: '28px', borderRadius:'100%', margin:'4px' }} />
+     </div>
+    <div>
+     <h6>{user.email}</h6>
     <Button
            size='lg'
            height='48px'
@@ -177,6 +181,8 @@ const Login = ({user}) => {
         onClick={googleSignOut} colorScheme="teal" mb={8}>
           Sign Out
         </Button>
+        </div>
+       </div>
     </>
 }
     </animated.div> 

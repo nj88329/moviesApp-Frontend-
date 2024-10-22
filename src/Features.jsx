@@ -5,7 +5,8 @@ import DragElement from "./DragElement";
 import DroppedElement from "./DroppedElement";
 import Nav from 'react-bootstrap/Nav';
 import { Link } from 'react-router-dom';
-import { useGetVideoQuery } from './rtkQuery/Video'
+import { useGetVideoQuery } from './rtkQuery/Video';
+import ReactPlayer from 'react-player/lazy'
 
 const Features = () => {
 
@@ -13,11 +14,12 @@ const Features = () => {
 
   const [ video , setSports ] = useState(videoList);
 
-   
+    
   
   useEffect(()=>{
+
     setSports(videoList);
-     if( video ) console.log('video', video)
+     if( video ) console.log('video', video.data.topTrendingTitles.edges[0].node.item.latestTrailer.playbackURLs[1].url)
   },[video , isFetching ])
  
   return (
@@ -28,7 +30,10 @@ const Features = () => {
         }}>Watched</Nav.Link>
       </Nav>
    
-    
+      <ReactPlayer url = {video?.data.topTrendingTitles.edges[0].node.item.latestTrailer.playbackURLs[1].url}
+      controls
+      playing
+      />
     <div className='App'  style={{ display: 'inline-flex', justifyContent: 'space-between', width: '100vw' }}>
       <DndProvider backend={HTML5Backend} >
       <div style={{ width:'50%' , boxSizing: 'border-box' , }}> {/* Container for DragElement */}
@@ -39,7 +44,7 @@ const Features = () => {
     </div>
        </DndProvider>
     </div>
-   
+     
     </>
   )
 }

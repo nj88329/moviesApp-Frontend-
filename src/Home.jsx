@@ -1,4 +1,4 @@
-// import React from 'react'
+ import React,{useMemo} from 'react'
 import { motion } from "framer-motion"
 import './index.css';
 import { useGetAllMoviesQuery , useGetAllShowsQuery } from './rtkQuery/Movies'
@@ -14,17 +14,19 @@ const Home = () => {
   const { data : showsList } = useGetAllShowsQuery();
   
   const [selectedTab, setSelectedTab] = useState(null);
-  const [ movies , setMovies ] = useState(moviesList);
-  const [ shows , setShows ] = useState(showsList);
-    
+  // const [ movies , setMovies ] = useState(moviesList);
+  // const [ shows , setShows ] = useState(showsList);
 
-
-  useEffect(()=>{
-    setMovies(moviesList);
-    setShows(showsList);
-  },[movies , shows , isFetching ])
+  const movies = useMemo(() => moviesList?.movies || [], [moviesList]);
+  const shows = useMemo(() => showsList?.movies || [], [showsList]);
+  // useEffect(()=>{
+  //   setMovies(moviesList);
+  //   setShows(showsList);
+  // },[movies , shows , isFetching ])
 
   console.log( 'helo', shows )
+
+
 
   return (
 <>
@@ -37,7 +39,7 @@ const Home = () => {
 
       <TabPanels>
         <TabPanel>
-          {isFetching ? 'Loading...' : <Movies movies={movies?.movies} />}
+          {isFetching ? 'Loading...' : <Movies movies={movies} />}
         </TabPanel>
         
         <TabPanel>

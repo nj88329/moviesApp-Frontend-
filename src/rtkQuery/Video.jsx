@@ -8,12 +8,12 @@ const headers= {
 export const videoApi = createApi({
     reducerPath : 'videoApi',
     baseQuery : fetchBaseQuery({
-      baseUrl : 'http://imdb232.p.rapidapi.com',
+      baseUrl : 'https://imdb232.p.rapidapi.com',
       headers
     }),
     endpoints: (builder) => ({
         getVideo: builder.query({
-          query: () => `/api/title/get-non-persisted-metadata?tt=tt0844653%2Ctt20215968%2Ctt0465494%2Ctt2679042`,
+          query: () => `/api/title/get-top-trending-video-trailers?limit=20`,
         }),
      })   
 })

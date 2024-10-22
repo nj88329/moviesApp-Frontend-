@@ -7,8 +7,6 @@ import DragItem from './DragItem';
 
 const DragElement = () => {
   
-
-   
   const task = useSelector((state) => state.task.task )
   console.log('tesasjv', task)
   
