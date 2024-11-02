@@ -1,4 +1,4 @@
-// import React from 'react'
+ import {React,memo} from 'react'
 // import { useAuth0 } from "@auth0/auth0-react";
 import ProtectedRoute from './ProtectedRoute';
 import Animation from './Components/Animation';
@@ -16,7 +16,6 @@ import {
   Switch,
   useColorMode,
   useColorModeValue,
-  ScaleFade,
 } from '@chakra-ui/react';
 import {   signInWithPopup, GoogleAuthProvider   } from "firebase/auth";
 import { getAuth, signOut } from "firebase/auth";
@@ -25,8 +24,7 @@ import { useNavigate }  from 'react-router-dom';
 
 const Login = ({user}) => {
 
-  
-
+   console.log('use commponend')
   const [springs, api] = useSpring(
     () => ({
       y: 0,
@@ -189,5 +187,5 @@ const Login = ({user}) => {
   )
 }
 
-export default Login
+export default memo(Login)
 

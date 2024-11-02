@@ -1,5 +1,5 @@
 import './App.css'
-import React from 'react'
+import React, { createContext ,  useContext ,useEffect ,useState , useMemo , useRef } from 'react'
 import { Routes, Route } from 'react-router-dom';
 import Home from './Home';
 import Login from './Login'
@@ -13,10 +13,9 @@ import PdfUploader from './Components/PdfUploader';
 import PdfViewer from './Components/PdfViewer';
 import Animation from './Components/Animation';
 import { initializeApp } from "firebase/app";
-import { useEffect ,useState , useMemo } from 'react';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import { useTransition, animated } from '@react-spring/web';
-import styles from './index.module.css'; // Correct for CSS Modules
+import { useTransition } from '@react-spring/web';
+
 
 
 const firebaseConfig = {
@@ -48,13 +47,19 @@ const slides = [
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 
+
+const AuthContext = createContext();
 function App() {
-  const [index, set] = useState(0)
-  const transitions = useTransition(index, {
-    key: index,
-    // from: { opacity: 0 },
-    // enter: { opacity: 1 },
-    // leave: { opacity: 0 },
+
+  
+ console.log('app rend')
+  
+  // const [index, set] = useState(0)
+  const indexRef = useRef(0); // Create a ref for the index
+  const currentImageRef = useRef(slides[0]); // Ref for the current background image
+
+  const transitions = useTransition(indexRef.current, {
+    key:indexRef.current,
     from: {
       clipPath: 'polygon(0% 0%, 0% 100%, 0% 100%, 0% 0%)' ,
       opacity: 0
@@ -68,63 +73,49 @@ function App() {
       opacity: 0
     },
     config: { duration: 4000 },
-    onRest: (_a, _b, item) => {
-      if (index === item) {
-        set(state => (state + 1) % slides.length)
-      }
+    onRest: () => {
+      // Update the index without causing a state change
+      indexRef.current = (indexRef.current + 1) % slides.length;
+      currentImageRef.current = slides[indexRef.current];
     },
      exitBeforeEnter:false,
   })
 
   const [user, setUser] = useState(null);
+  const [authToken, setToken] = useState(null);
+
+
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (newUser) => {
-      setUser((prevUser) => {
-        // Only update the user if the new one is different
-        if (newUser?.uid !== prevUser?.uid) {
-          return newUser || null;
-        }
-        return prevUser;
-      });
+    const unsubscribe = onAuthStateChanged(auth, async(newUser) => {
+      setUser((prevUser) => (newUser?.uid !== prevUser?.uid ? newUser : prevUser));
+      let token = await newUser.getIdToken();
+      setToken(token);
     });
-  
-    return () => unsubscribe();  // Cleanup on unmount
-  }, []);
+          
+    return () => unsubscribe();
+  }, [user]);
 
   const memoizedUser = useMemo(() => user, [user]);
 
   return (
     <>
-{/* cc5200 */}
 
   <Provider store={store} >
-
+  <AuthContext.Provider value={{user ,authToken }}>
   <ChakraProvider>
      {/* <div style={{ backgroundColor: 'black',  height: '100vh', width: '100vw', overflowX: 'hidden', display: 'flex', flexDirection: 'column' }}> */}
     <div style={{ backgroundColor: ''}}>
        
-        {/* <div className="flex fill center" >
-          {transitions((style, i) => (
-            <animated.div
-              className= { styles.bg }
-              style={{
-                ...style,
-                
-                backgroundImage: `url(${slides[i]})`,
-                overflowX: 'hidden', display: 'flex', flexDirection: 'column'
-              }}
-            />
-            
-          ))}
-    </div> */}
+      
           <Navbars />
           <div style={{ flexGrow: 1 }}> 
         <Routes >
-        <Route exact path="/" element={<Home/>} />
-        <Route path="/login" element={<Login user={user} />} />
+      
+        <Route path="/login" element={<Login user={memoizedUser} />} />
         <Route path='/animation' element={<Animation />}></Route>
           <Route element={<ProtectedRoute   user = {memoizedUser}  />}> 
+             <Route exact path="/" element={<Home/>} />
               <Route path="/features" element={<Features/>} />
               <Route path="/pdf" element={<PdfUploader/>} />
               <Route path='/viewpdf' element = {<PdfViewer/>}></Route>
@@ -135,13 +126,16 @@ function App() {
         {/* </div> */}
         </div>
    </ChakraProvider>
-  
+   </AuthContext.Provider>
       </Provider>
       
     </>
   )
 }
 
+export const useAuth = () => {
+  return useContext(AuthContext);
+};
 
 
 export default React.memo(App);

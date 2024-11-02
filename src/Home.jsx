@@ -19,14 +19,12 @@ const Home = () => {
 
   const movies = useMemo(() => moviesList?.movies || [], [moviesList]);
   const shows = useMemo(() => showsList?.movies || [], [showsList]);
-  // useEffect(()=>{
-  //   setMovies(moviesList);
-  //   setShows(showsList);
-  // },[movies , shows , isFetching ])
+  useEffect(()=>{
+    console.log('changing fetching')
 
-  console.log( 'helo', shows )
+  },[ isFetching ])
 
-
+ console.log('Hoem comp')
 
   return (
 <>
@@ -43,7 +41,7 @@ const Home = () => {
         </TabPanel>
         
         <TabPanel>
-          {isFetching ? 'Loading...' : <Shows shows={shows?.movies} />}
+          {isFetching ? 'Loading...' : <Shows shows={shows} />}
         </TabPanel>
       </TabPanels>
        </Tabs>

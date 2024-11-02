@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import {React,  memo,useState } from 'react';
 import {
   Card, CardBody, CardFooter,
   Button, ButtonGroup, Stack, Text, Image,
@@ -27,6 +27,8 @@ const Movies = ({ movies }) => {
     }
   };
 
+  console.log('movies comp',movies )
+
   return (
     <Box>
       <Box className='grid-container' style={{ overflowY: "scroll", overflowX: 'hidden' }}>
@@ -44,6 +46,9 @@ const Movies = ({ movies }) => {
               <Stack mt='6' spacing='3'>
                 <Text color='blue.600' fontSize='2xl'>
                   {item.title}
+                </Text>
+                <Text color='blue.600' fontSize='2xl'>
+                  {item.genres[0]}
                 </Text>
               </Stack>
             </CardBody>
@@ -84,4 +89,4 @@ Movies.propTypes = {
   ).isRequired,
 };
 
-export default Movies;
+export default memo(Movies);

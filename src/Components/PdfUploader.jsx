@@ -1,6 +1,6 @@
 import {useState} from 'react';
 import '../App.css';
-import ReactPlayer from 'react-player'
+
 
 const PdfUploader = () => {
 
