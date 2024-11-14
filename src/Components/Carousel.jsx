@@ -1,12 +1,12 @@
 import { useState } from 'react'
 import { useSpringCarousel  } from 'react-spring-carousel';
-
+import ReactPlayer from 'react-player'
 
  const Carousel = ({items}) =>{
 
   const [activeItem, setActiveItem] = useState(0)
     
-  console.log('itemsincarousel', items)
+  console.log('items', items)
 
 //   if (showExtraItems) {
 //     items.push(...extraItems);
@@ -34,8 +34,9 @@ import { useSpringCarousel  } from 'react-spring-carousel';
         id:index,
       renderItem: (
     <div >
-        <img src={i.node.item.latestTrailer.thumbnail.url} style={{height : '45vh', width : '70vw'}}
-        />
+        <img src={i.node.item.latestTrailer.thumbnail.url}
+        style={{width:'45vw' , height:'40vh'}}/>
+       
     </div>
       ),
     })),
@@ -43,6 +44,7 @@ import { useSpringCarousel  } from 'react-spring-carousel';
 
   useListenToCustomEvent((event) => {
     if (event.eventName === "onSlideStartChange") {
+      console.log("scrollstarted, next item id:", event.nextItem.id);
       setActiveItem(event.nextItem.id)
     } 
   });

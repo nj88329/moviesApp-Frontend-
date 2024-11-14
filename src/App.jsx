@@ -6,7 +6,7 @@ import Login from './Login'
 import Navbars from './Navbars';
 import ProtectedRoute from './ProtectedRoute';
 import Features from './Features';
-import { ChakraProvider, theme } from '@chakra-ui/react'
+import { ChakraProvider } from '@chakra-ui/react'
 import { store } from './store/store'
 import { Provider } from 'react-redux'
 import PdfUploader from './Components/PdfUploader';
@@ -14,7 +14,8 @@ import PdfViewer from './Components/PdfViewer';
 import Animation from './Components/Animation';
 import { initializeApp } from "firebase/app";
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import { useTransition } from '@react-spring/web';
+import { ImageGallery } from './Components/ImageGallery';
+
 
 
 
@@ -27,22 +28,6 @@ const firebaseConfig = {
   appId: "1:143961069808:web:9599560afa0a99ff5d0a35",
   measurementId: "G-E37B4899HL"
 };
-const slides = [
-  'cleanSky.jpg',
-  'ai.webp',
-   'bat.webp',
-    'candle.jpg',
-   'codes.jpg',
-    'drops.jpg',
-    'spaghetti.jpeg',
-    'x.webp',
-   'clouds.jpg',
-   'flowers.jpg',
-   'sunset.jpg',
-   'water.jpg',
-   'clouds.jpg',
-   'ai.jpg'
-]
 
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
@@ -56,30 +41,30 @@ function App() {
   
   // const [index, set] = useState(0)
   const indexRef = useRef(0); // Create a ref for the index
-  const currentImageRef = useRef(slides[0]); // Ref for the current background image
+  // const currentImageRef = useRef(slides[0]); // Ref for the current background image
 
-  const transitions = useTransition(indexRef.current, {
-    key:indexRef.current,
-    from: {
-      clipPath: 'polygon(0% 0%, 0% 100%, 0% 100%, 0% 0%)' ,
-      opacity: 0
-    },
-    enter: {
-      clipPath: 'polygon(0% 0%, 0% 100%, 100% 100%, 100% 0%)',
-      opacity: 1
-    },
-    leave: {
-      clipPath: 'polygon(100% ,0%, 100% 100%, 100% 100%, 100% 0%)',
-      opacity: 0
-    },
-    config: { duration: 4000 },
-    onRest: () => {
-      // Update the index without causing a state change
-      indexRef.current = (indexRef.current + 1) % slides.length;
-      currentImageRef.current = slides[indexRef.current];
-    },
-     exitBeforeEnter:false,
-  })
+  // const transitions = useTransition(indexRef.current, {
+  //   key:indexRef.current,
+  //   from: {
+  //     clipPath: 'polygon(0% 0%, 0% 100%, 0% 100%, 0% 0%)' ,
+  //     opacity: 0
+  //   },
+  //   enter: {
+  //     clipPath: 'polygon(0% 0%, 0% 100%, 100% 100%, 100% 0%)',
+  //     opacity: 1
+  //   },
+  //   leave: {
+  //     clipPath: 'polygon(100% ,0%, 100% 100%, 100% 100%, 100% 0%)',
+  //     opacity: 0
+  //   },
+  //   config: { duration: 4000 },
+  //   onRest: () => {
+  //     // Update the index without causing a state change
+  //     indexRef.current = (indexRef.current + 1) % slides.length;
+  //     currentImageRef.current = slides[indexRef.current];
+  //   },
+  //    exitBeforeEnter:false,
+  // })
 
   const [user, setUser] = useState(null);
   const [authToken, setToken] = useState(null);
@@ -110,7 +95,7 @@ function App() {
       
           <Navbars />
           <div style={{ flexGrow: 1 }}> 
-        <Routes >
+        <Routes>
       
         <Route path="/login" element={<Login user={memoizedUser} />} />
         <Route path='/animation' element={<Animation />}></Route>
@@ -120,7 +105,7 @@ function App() {
               <Route path="/pdf" element={<PdfUploader/>} />
               <Route path='/viewpdf' element = {<PdfViewer/>}></Route>
           </Route>
-          
+          <Route path = '/gallery' element = {<ImageGallery/>}></Route>
         </Routes>
         </div>
         {/* </div> */}

@@ -1,9 +1,4 @@
-body {
-  
-  margin: 0; /* Ensure no white space around */
-  overflow-x: hidden; /* Prevent horizontal scrolling */
-}
-
+@import url('https://rsms.me/inter/inter.css');
 
 
 #root {
@@ -12,6 +7,15 @@ body {
   text-align: center;
   scrollbar-width: auto;
 }
+
+body {
+  
+  margin: 0; /* Ensure no white space around */
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+
+
 
 
 
@@ -106,4 +110,35 @@ button path {
 
 .flex.center {
   justify-content: center;
+}
+
+
+
+a {
+  color: black;
+}
+
+a {
+  pointer-events: all;
+  color: black;
+  text-decoration: none;
+}
+
+svg {
+  fill: black;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+canvas {
+  opacity: 0;
+  touch-action: none;
+  animation: fade-in 5s ease 1s forwards;
 }
