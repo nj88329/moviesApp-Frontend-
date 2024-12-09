@@ -11,6 +11,7 @@ const MotionCard = motion(Card);
 
 const DragItem = ({item}) => {
   
+  const url = `https://movies-app-51sm.vercel.app/` || `http://localhost:3000/`;
   
 const time = useTime();
 const rotate = useTransform(time, [0, 4000], [0, 180], { clamp: false });
@@ -31,7 +32,7 @@ const rotate = useTransform(time, [0, 4000], [0, 180], { clamp: false });
           if( item && droppedResult){
             // alert(`You threw ${item.name} into ${droppedResult.name}`)
             console.log('droppedfromcomoponr', item)
-             let response = await fetch( `http://localhost:3000/add/deleteTask/${item._id}`,
+             let response = await fetch( `${url}add/deleteTask/${item._id}`,
               {method: 'PUT',
                 headers : {
                   'Content-Type': 'application/json'

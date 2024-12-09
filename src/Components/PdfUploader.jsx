@@ -4,6 +4,9 @@ import '../App.css';
 
 const PdfUploader = () => {
 
+  
+const url = `https://movies-app-51sm.vercel.app/` || `http://localhost:3000/`;
+
     const [file, setFile] = useState(null);
 
     const handleFileChange = (e) => {
@@ -20,7 +23,7 @@ const PdfUploader = () => {
             formData.append('file', file);
       
             try {
-              const result = await fetch('http://localhost:3000/upload', {
+              const result = await fetch(`${url}upload`, {
                 method: 'POST',
                 body: formData,
               });

@@ -25,6 +25,9 @@ import { useNavigate }  from 'react-router-dom';
 
 const Login = ({user}) => {
 
+  
+const url = `https://movies-app-51sm.vercel.app/` || `http://localhost:3000/`;
+
    console.log('use commponend')
   const [springs, api] = useSpring(
     () => ({
@@ -81,7 +84,7 @@ const Login = ({user}) => {
       return users.getIdToken();
     })
     .then((firebaseIdToken) => {
-      return fetch('http://localhost:3000/auth/google/', { // Ensure protocol matches server
+      return fetch(`${url}auth/google/`, { // Ensure protocol matches server
         method: 'POST',
         headers: {
       'Authorization': `Bearer ${firebaseIdToken}`,

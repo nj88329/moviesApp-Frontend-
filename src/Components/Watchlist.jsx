@@ -1,5 +1,7 @@
 
 
+const url = `https://movies-app-51sm.vercel.app/` || `http://localhost:3000/`;
+
 export async function addToWatchList(item , user, authToken ){
     
    console.log('item', item)
@@ -12,8 +14,8 @@ export async function addToWatchList(item , user, authToken ){
       alert('movie is already present in the watchlist')
       return ;
      }
-  
-  let response = await fetch('http://localhost:3000/add/addTask', 
+       
+  let response = await fetch(`${url}add/addTask}`, 
     {method: 'POST',
         headers : {
          'Authorization': `Bearer ${authToken}`,
@@ -27,7 +29,7 @@ export async function addToWatchList(item , user, authToken ){
 
 
 export async function getWatchList(authToken){
-   let checkItemResponse = await fetch( `http://localhost:3000/add/`,{
+   let checkItemResponse = await fetch( `${url}add/`,{
       method:'GET',
       headers : {
          'Authorization': `Bearer ${authToken}`,
@@ -50,7 +52,7 @@ export async function checkItem(item ,  authToken){
     if( !authToken) 
        throw Error('User is not authorized');
 
-    let checkItemPresent = await fetch(`http://localhost:3000/add/${item.title}`,{
+    let checkItemPresent = await fetch(`${url}add/${item.title}`,{
       method:'GET',
       headers : {
          'Authorization' : `Bearer ${authToken}`
