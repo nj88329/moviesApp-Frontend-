@@ -1,7 +1,7 @@
 import { useGetVideoQuery } from '../rtkQuery/Video';
 import ReactPlayer from 'react-player/lazy';
 import {  useState , useEffect} from 'react';
-import {Button} from '@chakra-ui/react'
+
 
 
 const Videos = () => {

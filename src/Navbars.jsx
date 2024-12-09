@@ -16,10 +16,9 @@ const Navbars = () => {
           <Nav.Link as={Link} to="/viewpdf">Watched Movies </Nav.Link>
           <Nav.Link as={Link} to="/login">Login</Nav.Link>
           <Nav.Link as={Link} to="/gallery">Gallery</Nav.Link>
-<<<<<<< HEAD:vite-project/src/Navbars.jsx
+
           <Nav.Link as = {Link} to='/video'>Videos</Nav.Link>
-=======
->>>>>>> origin/main:src/Navbars.jsx
+
           {/* <Nav.Link as={Link} to='/animation'>Welcome</Nav.Link> */}
           </Nav>
         </Container>

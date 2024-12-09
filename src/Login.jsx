@@ -162,37 +162,35 @@ const Login = ({user}) => {
           />
         </FormControl>    
       </Flex>
-    </Flex>
+ </Flex>
   
     </>: <>
-<<<<<<< HEAD:vite-project/src/Login.jsx
+
    
    <div style={{display:'block',marginTop:'12vh' }}>
-=======
-   <div style={{display:'block',marginTop:'-12vh' }}>
->>>>>>> origin/main:src/Login.jsx
-    <div style={{display:'flex', justifyContent:'center'}}>
-    <h2>{user.displayName}</h2>
-      <img src={user.photoURL} style={{ height: '28px', borderRadius:'100%', margin:'4px' }} />
-     </div>
-    <div>
-     <h6>{user.email}</h6>
-    <Button
-           size='lg'
-           height='48px'
-            width='auto'
-           border='2px'
-           borderColor='white'
-           alignSelf="center"
-        onClick={googleSignOut} colorScheme="teal" mb={8}>
-          Sign Out
-        </Button>
+
+     <div style={{display:'block',marginTop:'-12vh' }}>
+
+        <div style={{display:'flex', justifyContent:'center'}}>
+              <h2>{user.displayName}</h2>
+                <img src={user.photoURL} style={{ height: '28px', borderRadius:'100%', margin:'4px' }} />
         </div>
-       </div>
-<<<<<<< HEAD:vite-project/src/Login.jsx
+       <div>
+            <h6>{user.email}</h6>
+              <Button
+                    size='lg'
+                    height='48px'
+                      width='auto'
+                    border='2px'
+                    borderColor='white'
+                    alignSelf="center"
+                  onClick={googleSignOut} colorScheme="teal" mb={8}>
+                    Sign Out
+                </Button>
+        </div>
+     </div>
+   </div>
        <Premium/>
-=======
->>>>>>> origin/main:src/Login.jsx
     </>
 
 }

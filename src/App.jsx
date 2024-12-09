@@ -15,6 +15,7 @@ import Animation from './Components/Animation';
 import { initializeApp } from "firebase/app";
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { ImageGallery } from './Components/ImageGallery';
+import Videos from './Components/Videos';
 
 
 
@@ -105,6 +106,7 @@ function App() {
               <Route path="/pdf" element={<PdfUploader/>} />
               <Route path='/viewpdf' element = {<PdfViewer/>}></Route>
           </Route>
+          <Route path = '/video' element = {<Videos/>}></Route>
           <Route path = '/gallery' element = {<ImageGallery/>}></Route>
         </Routes>
         </div>
