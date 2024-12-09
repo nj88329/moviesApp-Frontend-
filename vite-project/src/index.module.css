@@ -1,0 +1,12 @@
+.bg {
+    position: absolute;
+    top: 10vh;
+    left: 10vw ;
+    width: 80vw;
+    height:67vh;
+    background-size: cover;
+    background-position: center;
+    will-change: opacity;
+    overflow:scroll
+  }
+  

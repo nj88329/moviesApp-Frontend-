@@ -6,10 +6,13 @@ import PropTypes from 'prop-types';
 import { addToWatchList } from './Watchlist';
 import { useDispatch  } from 'react-redux'; 
 import { toDoTask } from '../features/taskSlice';
+import { useAuth } from '../App';
+
 
 const Shows = ({shows}) => {
 
- console.log('sjows', shows);
+  const { user , authToken } = useAuth();  
+  
 
  const buttonRef = useRef([]);
 
@@ -57,7 +60,7 @@ const Shows = ({shows}) => {
       }
     }
 
-  console.log('show', shows)
+ 
   return (
     <div className='grid-container' style={{overflowY: "scroll" , overflowX :'hidden' }}>
        {
@@ -86,7 +89,7 @@ const Shows = ({shows}) => {
                      <Button onClick={()=>{shareDetails(item.title , index) }} > 
                        { ( clicked === item.title ) ? <Details item={item} /> : 'Poster' }
                      </Button>
-                     <Button onClick={()=>{addToWatchList(item); dispatch(toDoTask(item)); changeColor(index) }} ref={(el) => buttonRef.current[index] = el} > 
+                     <Button onClick={()=>{addToWatchList(item , user , authToken); dispatch(toDoTask(item)); changeColor(index) }} ref={(el) => buttonRef.current[index] = el} > 
                          Add To watchList                       
                      </Button>
                     </Stack>

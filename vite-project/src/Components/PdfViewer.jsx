@@ -1,18 +1,36 @@
-import { useSelector } from "react-redux"
 import { Box } from '@chakra-ui/react';
-import { Image  } from '@chakra-ui/react';
-import { useRef } from 'react';
+import { useEffect, useRef ,useState } from 'react'; 
+import { getWatchList } from './Watchlist';
+import { useAuth } from '../App';
+
 const PdfViewer = () => {
 
-  const completedTask = useSelector((state)=>state.task.completedTask);
+  
+  const { user , authToken } = useAuth();  
+  
+  let [completedTask , setCompletedTask] = useState([])
+
+  console.log('completef', completedTask);
+ 
+
+
+  // fetching the data from the database for the movies to be watched using utility function getWatchlist 
+  useEffect(()=>{
+
+    async function getData(){
+      let response = await  getWatchList(authToken);
+      setCompletedTask(response)
+      console.log('completedTask',completedTask)
+    }
+    getData();
+
+  },[])
  
   const  divRefs = useRef([]);
 
   const hover = (index)=>{
     
-
      if (divRefs.current[index]) {
-        console.log('devinj', index)
         divRefs.current[index].style.backgroundColor = 'black';
         divRefs.current[index].style.borderColor = 'yellow';
         divRefs.current[index].style.color = 'red';
@@ -31,21 +49,23 @@ const PdfViewer = () => {
  }
 
   return (
-<>
-{ 
- completedTask.map((item , index)=>{ return<>
-    <Box maxW='sm' key={index} borderWidth='1px' borderRadius='lg' overflow='hidden' 
-    backgroundColor={'grey'} ref={(el) => divRefs.current[index] = el} 
+
+
+ <Box display='flex' flexWrap='wrap' justifyContent='space-between'>
+ { 
+   completedTask?.map((item , index)=>{ return<>
+    <Box maxW='sm' key={index} borderWidth='1px' borderRadius='lg' overflow='hidden' display='flex' flexWrap = 'nowrap'
+    backgroundImage={item.movie.backdrop_path} ref={(el) => divRefs.current[index] = el} 
     margin='5px' onMouseEnter={()=>hover(index)} onMouseLeave={()=>unHover(index)}
     
     >
       {/* <Image src={item.backdrop_path} alt={item.title} /> */}
  
-      <Box p='6'      >
-        <Box display='flex' alignItems='baseline' >
+      <Box p='6'>
+        <Box  alignItems='baseline' >
           <Box
             
-            color='gray.500'
+            // color='gray.500'
             fontWeight='semibold'
             letterSpacing='wide'
             fontSize='xs'
@@ -56,25 +76,26 @@ const PdfViewer = () => {
           </Box>
         </Box>
 
-        <Box
+        <Box 
+          
           mt='1'
           fontWeight='semibold'
           as='h4'
           lineHeight='tight'
           noOfLines={1}
         >
-          {item.original_title}
+          {item.movie.original_title}
         </Box>
 
         <Box>
           {/* {property.formattedPrice} */}
-          <Box as='span' color='gray.600' fontSize='sm'>
-            Launched  : {item.first_aired}
+          <Box as='span'  fontSize='sm'>
+            Launched  : {item.movie.first_aired}
           </Box>
         </Box>
 
         <Box display='flex' mt='2' alignItems='center'>
-          <Box as='span' ml='2' color='gray.600' fontSize='sm'>
+          <Box as='span' ml='2' fontSize='sm'>
             {/* {property.reviewCount} reviews */}
           </Box>
         </Box>
@@ -82,7 +103,7 @@ const PdfViewer = () => {
     </Box>
     </>})
 }
-</>
+</Box>
   )
 }
 

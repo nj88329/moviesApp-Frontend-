@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 // import { useEffect } from "react";
 
 const ProtectedRoute = ({user}) => {
-console.log('userere', user);
 
 
  return<>

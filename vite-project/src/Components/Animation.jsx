@@ -30,10 +30,6 @@ function ParallaxText({ children, baseVelocity = 100 }) {
    */
   const x = useTransform(baseX, (v) => `${wrap(-20, -45, v)}%`);
 
-  const scale = useTransform(baseX, (v) => {
-    // Adjust the scale values based on the desired effect
-    return wrap(0.97, 1.06, v); // Scale between 0.9 and 1.1
-  });
 
   const directionFactor = useRef(1);
   useAnimationFrame((t, delta) => {
@@ -53,7 +49,7 @@ function ParallaxText({ children, baseVelocity = 100 }) {
 
   return (
     <div className="parallax">
-      <motion.div className="scroller" style={{ x , scale }}>
+      <motion.div className="scroller" style={{ x  }}>
         <span>{children} </span>
         <span>{children} </span>
         <span>{children} </span>
@@ -66,8 +62,8 @@ function ParallaxText({ children, baseVelocity = 100 }) {
 const Animation = () => {
   return (
         <section>
-          <ParallaxText baseVelocity={-5}>SCROLL DOWN TO LOGIN</ParallaxText>
-          <ParallaxText baseVelocity={5}>LOGIN TO CONTINUE</ParallaxText>
+          <ParallaxText baseVelocity={-5}>"SCROLL DOWN TO LOGIN"</ParallaxText>
+          <ParallaxText baseVelocity={5}>"LOGIN TO CONTINUE"</ParallaxText>
         </section>
   )
 }

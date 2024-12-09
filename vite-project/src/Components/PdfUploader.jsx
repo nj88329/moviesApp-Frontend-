@@ -1,5 +1,6 @@
 import {useState} from 'react';
-import '../App.css'
+import '../App.css';
+
 
 const PdfUploader = () => {
 
@@ -56,6 +57,9 @@ const PdfUploader = () => {
           className="submit"
         >Upload a file</button>
       )}
+      </div>
+      <div>
+      {/* <ReactPlayer url= {} /> */}
       </div>
     </>
   )

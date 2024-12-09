@@ -1,10 +1,11 @@
-// import React from 'react'
+ import {React,memo} from 'react'
 // import { useAuth0 } from "@auth0/auth0-react";
 import ProtectedRoute from './ProtectedRoute';
 import Animation from './Components/Animation';
 import { useSpring, animated } from '@react-spring/web';
 import { config } from '@react-spring/web';
-import { easings } from '@react-spring/web'
+import { easings } from '@react-spring/web';
+import Premium from './Components/Premium'
 
 import {
   Flex,
@@ -16,7 +17,6 @@ import {
   Switch,
   useColorMode,
   useColorModeValue,
-  ScaleFade,
 } from '@chakra-ui/react';
 import {   signInWithPopup, GoogleAuthProvider   } from "firebase/auth";
 import { getAuth, signOut } from "firebase/auth";
@@ -25,8 +25,7 @@ import { useNavigate }  from 'react-router-dom';
 
 const Login = ({user}) => {
 
-  
-
+   console.log('use commponend')
   const [springs, api] = useSpring(
     () => ({
       y: 0,
@@ -119,10 +118,11 @@ const Login = ({user}) => {
   }
 
   return (
-    <animated.div style={springs}  >
-      <Animation/>
+    <animated.div style={springs}>
+          {/* <Animation/> */}
 {
   (!user)?<>
+ 
 <Flex h="100vh" alignItems="center" justifyContent="center"    >
       <Flex 
         flexDirection="column"
@@ -152,7 +152,7 @@ const Login = ({user}) => {
         </Button>
         <FormControl display="flex" alignItems="center">
           <FormLabel htmlFor="dark_mode" mb="0">
-            Enable Dark Mode?
+            Switch Mode
           </FormLabel>
           <Switch
             id="dark_mode"
@@ -160,12 +160,19 @@ const Login = ({user}) => {
             size="lg"
             onChange={toggleColorMode}
           />
-        </FormControl>
+        </FormControl>    
       </Flex>
     </Flex>
+  
     </>: <>
-      <h2>{user.displayName}</h2>
-      <h3>{user.email}</h3>
+   
+   <div style={{display:'block',marginTop:'12vh' }}>
+    <div style={{display:'flex', justifyContent:'center'}}>
+    <h2>{user.displayName}</h2>
+      <img src={user.photoURL} style={{ height: '28px', borderRadius:'100%', margin:'4px' }} />
+     </div>
+    <div>
+     <h6>{user.email}</h6>
     <Button
            size='lg'
            height='48px'
@@ -176,11 +183,15 @@ const Login = ({user}) => {
         onClick={googleSignOut} colorScheme="teal" mb={8}>
           Sign Out
         </Button>
+        </div>
+       </div>
+       <Premium/>
     </>
+
 }
     </animated.div> 
   )
 }
 
-export default Login
+export default memo(Login)
 

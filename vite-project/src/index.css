@@ -46,7 +46,7 @@ button:focus-visible {
   display: grid;
   /* background-color: black; */
    grid-template-columns: repeat(3, 1fr);
-  grid-gap: 10px; /* spacing between grid items */
+  grid-gap: 5px; /* spacing between grid items */
   height: 80vh;
   position: relative;
  
@@ -107,9 +107,11 @@ section {
 
 .parallax .scroller {
   font-weight: 600;
+  font-family:'Plaster", sans-serif';
   text-transform: uppercase;
-  font-style:oblique;
-  color:chartreuse;
+  font-style:normal;
+  -webkit-font-smoothing: antialiased;
+  color:greenyellow;
   font-size: 60px;
   display: flex;
   white-space: nowrap;
@@ -121,3 +123,5 @@ section {
   display: block;
   margin-right: 30px;
 }
+
+

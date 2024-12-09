@@ -1,5 +1,6 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react-swc'
+
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react-swc';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -12,5 +13,8 @@ export default defineConfig({
   optimizeDeps: {
     exclude: ['framer-motion'],
   },
+  server: {
+    host: '0.0.0.0', // Allow access from any IP
+    port: 5173,      // You can specify the port explicitly if needed
+  },
 });
-
