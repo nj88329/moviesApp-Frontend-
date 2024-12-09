@@ -142,6 +142,7 @@ canvas {
   touch-action: none;
   animation: fade-in 5s ease 1s forwards;
 }
+<<<<<<< HEAD:vite-project/src/App.css
 main {
   display: flex;
   flex-direction: column;
@@ -264,3 +265,5 @@ main {
     }
   }
 }
+=======
+>>>>>>> origin/main:src/App.css

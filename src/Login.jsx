@@ -165,8 +165,12 @@ const Login = ({user}) => {
     </Flex>
   
     </>: <>
+<<<<<<< HEAD:vite-project/src/Login.jsx
    
    <div style={{display:'block',marginTop:'12vh' }}>
+=======
+   <div style={{display:'block',marginTop:'-12vh' }}>
+>>>>>>> origin/main:src/Login.jsx
     <div style={{display:'flex', justifyContent:'center'}}>
     <h2>{user.displayName}</h2>
       <img src={user.photoURL} style={{ height: '28px', borderRadius:'100%', margin:'4px' }} />
@@ -185,7 +189,10 @@ const Login = ({user}) => {
         </Button>
         </div>
        </div>
+<<<<<<< HEAD:vite-project/src/Login.jsx
        <Premium/>
+=======
+>>>>>>> origin/main:src/Login.jsx
     </>
 
 }
