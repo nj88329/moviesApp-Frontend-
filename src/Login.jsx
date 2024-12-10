@@ -193,7 +193,7 @@ const url = `https://movies-app-51sm.vercel.app/` || `http://localhost:3000/`;
         </div>
      </div>
    </div>
-       <Premium/>
+       {/* <Premium/> */}
     </>
 
 }
